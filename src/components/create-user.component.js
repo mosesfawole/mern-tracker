@@ -1,30 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
-
-const User = (props) => (
-  <tr>
-    <td>{props.username.username}</td>
-    <button
-      className="btn btn-danger mr-2"
-      href="#"
-      onClick={() => {
-        props.deleteExercise(props.exercise._id);
-      }}
-    >
-      delete
-    </button>{" "}
-  </tr>
-);
 class CreateUsers extends Component {
   constructor(props) {
     super(props);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
-    this.state = {
-      username: "",
-    };
+    this.state = { username: "", users: [] };
   }
+  componentDidMount() {
+    axios.get("http://localhost:5000/users").then((res) => {
+      if (res.data.length > 0) {
+        this.setState({
+          users: res.data.map((user) => user.username),
+          username: res.data[0].username,
+        });
+      }
+    });
+  }
+
   onChangeUsername(e) {
     this.setState({
       username: e.target.value,
@@ -59,4 +52,18 @@ class CreateUsers extends Component {
               value={this.state.username}
               onChange={this.onChangeUsername}
             />
-          </div
+          </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Create User"
+              className="btn btn-primary"
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default CreateUsers;

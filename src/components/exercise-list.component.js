@@ -13,7 +13,7 @@ const Exercise = (props) => (
       <button className="btn btn-success">
         {" "}
         <Link style={{ color: "white" }} to={"/edit/" + props.exercise._id}>
-          edit
+          Edit
         </Link>
       </button>{" "}
       |
@@ -24,7 +24,7 @@ const Exercise = (props) => (
           props.deleteExercise(props.exercise._id);
         }}
       >
-        delete
+        Delete
       </button>{" "}
     </td>
   </tr>
